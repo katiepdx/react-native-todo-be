@@ -62,4 +62,30 @@ describe('react-native-todo-be routes', () => {
         });
       });
   });
+
+  it('should update a todo by id in the database using PUT', async () => {
+    await request(app)
+      .put('/api/v1/todos/1')
+      .send({
+        userEmail: 'UPDATED@email.com',
+        todo: 'UPDATED todo',
+        notes: 'UPDATED notes notes notes',
+        completed: true,
+        tags: ['updated', 'sql', 'post'],
+        dateAdded: new Date(Date.now()),
+        dateCompleted: new Date(Date.now())
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          todoId: '1',
+          userEmail: 'UPDATED@email.com',
+          todo: 'UPDATED todo',
+          notes: 'UPDATED notes notes notes',
+          completed: true,
+          tags: ['updated', 'sql', 'post'],
+          dateAdded: expect.any(String),
+          dateCompleted: expect.any(String)
+        });
+      });
+  });
 });
