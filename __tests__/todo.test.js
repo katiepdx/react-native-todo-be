@@ -88,4 +88,21 @@ describe('react-native-todo-be routes', () => {
         });
       });
   });
+
+  it('should delete a todo from the database by id using DELETE', async () => {
+    await request(app)
+      .delete('/api/v1/todos/2')
+      .then(res => {
+        expect(res.body).toEqual({
+          todoId: '2',
+          userEmail: expect.any(String),
+          todo: expect.any(String),
+          notes: expect.any(String),
+          completed: expect.any(Boolean),
+          tags: expect.any(Array),
+          dateAdded: expect.any(String),
+          dateCompleted: expect.any(String)
+        });
+      });
+  });
 });
